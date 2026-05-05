@@ -1,0 +1,10 @@
+name = "darwin-page"
+compatibility_date = "2026-05-02"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[[d1_databases]]
+binding = "D1_DB"
+database_name = "darwin_db"
+database_id = "49d422c9-e88f-4b89-8391-3eb7c7ee0b14"
+migrations_dir = "src/db/migrations"
