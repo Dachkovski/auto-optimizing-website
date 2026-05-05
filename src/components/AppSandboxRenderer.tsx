@@ -37,6 +37,17 @@ export default function AppSandboxRenderer({ variant }: { variant: AppVariant })
     window.darwin = {
       trackEvent: (eventType, metadata = {}) => {
         window.parent.postMessage({ type: 'DARWIN_EVENT', eventType, metadata }, '*');
+      },
+      requestPayment: (amount, reason) => {
+        // Track the request immediately
+        window.parent.postMessage({ type: 'DARWIN_EVENT', eventType: 'payment_requested', metadata: { amount, reason } }, '*');
+        // Simulate a real payment flow (e.g. Stripe checkout) that returns a promise
+        return new Promise((resolve) => {
+          setTimeout(() => {
+             window.parent.postMessage({ type: 'DARWIN_EVENT', eventType: 'payment_completed', metadata: { amount, reason } }, '*');
+             resolve({ success: true, amount, reason });
+          }, 2000); // Mock user completing payment after 2 seconds
+        });
       }
     };
     
